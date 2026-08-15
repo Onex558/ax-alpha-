@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Sx alpha — Games</title>
+
+<style>
+:root{
+  --bg:#070914;
+  --panel:#11162a;
+  --panel2:#171d35;
+  --purple:#8b5cf6;
+  --purple2:#a855f7;
+  --blue:#38bdf8;
+  --text:#f5f7ff;
+  --muted:#9ba5c7;
+  --border:rgba(255,255,255,.08);
+}
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  background:
+    radial-gradient(circle at 50% -10%,rgba(139,92,246,.25),transparent 35%),
+    radial-gradient(circle at 10% 20%,rgba(56,189,248,.10),transparent 30%),
+    var(--bg);
+  color:var(--text);
+  font-family:Arial,Helvetica,sans-serif;
+  min-height:100vh;
+}
+
+/* NAVBAR */
+
+header{
+  height:64px;
+  background:rgba(12,16,31,.96);
+  border-bottom:1px solid var(--border);
+  display:flex;
+  align-items:center;
+  padding:0 4%;
+  gap:30px;
+  position:sticky;
+  top:0;
+  z-index:100;
+  backdrop-filter:blur(14px);
+}
+
+.logo{
+  font-size:21px;
+  font-weight:800;
+  color:#a78bfa;
+  min-width:150px;
+}
+
+.search{
+  flex:1;
+  max-width:420px;
+  position:relative;
+}
+
+.search input{
+  width:100%;
+  height:42px;
+  border:none;
+  outline:none;
+  border-radius:24px;
+  padding:0 18px 0 44px;
+  background:#f5f6fa;
+  color:#111827;
+  font-size:14px;
+}
+
+.search span{
+  position:absolute;
+  left:16px;
+  top:12px;
+  color:#8992a8;
+}
+
+.navlinks{
+  display:flex;
+  gap:20px;
+  align-items:center;
+  color:#c6ccdd;
+  font-size:14px;
+}
+
+.navlinks button{
+  border:0;
+  background:none;
+  color:#c6ccdd;
+  cursor:pointer;
+  font-size:14px;
+}
+
+.navlinks button:hover{
+  color:white;
+}
+
+.discord{
+  color:#9f8cff!important;
+  font-size:20px!important;
+}
+
+.open-btn{
+  background:linear-gradient(135deg,#8b5cf6,#6366f1);
+  color:white!important;
+  padding:10px 16px!important;
+  border-radius:20px!important;
+  font-weight:700;
+}
+
+/* HERO */
+
+.hero{
+  min-height:270px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:50px 20px;
+  background:
+    radial-gradient(circle at center,rgba(139,92,246,.18),transparent 45%);
+}
+
+.hero h1{
+  margin:0;
+  font-size:54px;
+  letter-spacing:-2px;
+  background:linear-gradient(90deg,#60a5fa,#a855f7,#c084fc);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  filter:drop-shadow(0 0 25px rgba(139,92,246,.5));
+}
+
+.hero p{
+  max-width:650px;
+  line-height:1.6;
+  color:#d1d7eb;
+  margin:12px 0 25px;
+  font-size:16px;
+}
+
+.random-main{
+  border:0;
+  padding:13px 24px;
+  border-radius:25px;
+  background:linear-gradient(135deg,#8b5cf6,#3b82f6);
+  color:white;
+  font-weight:800;
+  cursor:pointer;
+  box-shadow:0 8px 30px rgba(99,102,241,.3);
+}
+
+.random-main:hover{
+  transform:translateY(-2px);
+}
+
+/* MAIN */
+
+main{
+  max-width:1250px;
+  margin:auto;
+  padding:38px 25px 80px;
+}
+
+.section-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:28px;
+}
+
+.title-area{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.title-area h2{
+  margin:0;
+  font-size:21px;
+}
+
+.count{
+  color:#9ca8c8;
+  font-size:13px;
+}
+
+.controls{
+  display:flex;
+  gap:10px;
+}
+
+.control{
+  border:0;
+  background:#182139;
+  color:#b9c3dc;
+  border-radius:8px;
+  padding:9px 13px;
+  cursor:pointer;
+}
+
+.control:hover{
+  background:#222c48;
+}
+
+/* GAMES */
+
+.games{
+  display:grid;
+  grid-template-columns:repeat(6,1fr);
+  gap:20px;
+}
+
+.card{
+  min-width:0;
+  background:#1b2437;
+  border-radius:10px;
+  overflow:hidden;
+  cursor:pointer;
+  transition:.18s ease;
+  border:1px solid transparent;
+}
+
+.card:hover{
+  transform:translateY(-4px);
+  border-color:rgba(139,92,246,.55);
+  box-shadow:0 12px 30px rgba(0,0,0,.35);
+}
+
+.cover{
+  width:100%;
+  aspect-ratio:1.38/1;
+  object-fit:cover;
+  display:block;
+  background:#202a3c;
+}
+
+.info{
+  height:57px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 12px;
+  gap:8px;
+}
+
+.game-name{
+  font-size:14px;
+  font-weight:700;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.star{
+  color:#91a0c0;
+  font-size:20px;
+  flex-shrink:0;
+}
+
+.star.active{
+  color:#facc15;
+}
+
+/* LOADING */
+
+.loading{
+  grid-column:1/-1;
+  text-align:center;
+  padding:80px 20px;
+  color:#aeb8d3;
+}
+
+.spinner{
+  width:35px;
+  height:35px;
+  border:4px solid #252e48;
+  border-top-color:#8b5cf6;
+  border-radius:50%;
+  animation:spin .8s linear infinite;
+  margin:0 auto 15px;
+}
+
+@keyframes spin{
+  to{transform:rotate(360deg)}
+}
+
+/* MODAL */
+
+.viewer{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(3,5,12,.94);
+  z-index:500;
+  padding:18px;
+}
+
+.viewer.show{
+  display:flex;
+  flex-direction:column;
+}
+
+.viewer-top{
+  height:55px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 10px;
+}
+
+.viewer-title{
+  font-weight:800;
+  font-size:18px;
+}
+
+.viewer-buttons{
+  display:flex;
+  gap:8px;
+}
+
+.viewer-buttons button{
+  border:0;
+  background:#202a42;
+  color:white;
+  padding:9px 14px;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.close{
+  background:#ef4444!important;
+}
+
+.frame-wrap{
+  flex:1;
+  border-radius:12px;
+  overflow:hidden;
+  background:#000;
+  border:1px solid rgba(255,255,255,.08);
+}
+
+iframe{
+  width:100%;
+  height:100%;
+  border:0;
+}
+
+/* MOBILE */
+
+@media(max-width:1050px){
+  .games{
+    grid-template-columns:repeat(4,1fr);
+  }
+
+  .navlinks{
+    gap:10px;
+  }
+}
+
+@media(max-width:750px){
+  header{
+    padding:0 15px;
+    gap:10px;
+  }
+
+  .logo{
+    min-width:auto;
+  }
+
+  .navlinks button:not(.discord){
+    display:none;
+  }
+
+  .open-btn{
+    display:none;
+  }
+
+  .search{
+    max-width:none;
+  }
+
+  .hero h1{
+    font-size:42px;
+  }
+
+  .games{
+    grid-template-columns:repeat(2,1fr);
+    gap:14px;
+  }
+
+  main{
+    padding:25px 14px 60px;
+  }
+}
+
+@media(max-width:430px){
+  .games{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .hero{
+    min-height:240px;
+  }
+
+  .hero h1{
+    font-size:36px;
+  }
+
+  .section-head{
+    align-items:flex-start;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+  <div class="logo">
+    Sx alpha
+  </div>
+
+  <div class="search">
+    <span>🔎</span>
+    <input id="search" type="text" placeholder="Find a game...">
+  </div>
+
+  <div class="navlinks">
+    <button onclick="showFavorites()">★ Favorites</button>
+    <button onclick="randomGame()">🎲 Random</button>
+    <button class="discord" title="Sx alpha">●</button>
+    <button title="Settings">⚙</button>
+    <button class="open-btn" onclick="openCurrentAboutBlank()">
+      ↗ Open in about:blank
+    </button>
+  </div>
+
+</header>
+
+<section class="hero">
+
+  <h1>Sx alpha</h1>
+
+  <p>
+    Your ultimate gaming destination.
+    Play your favorite games anytime, anywhere —
+    no installations needed.
+  </p>
+
+  <button class="random-main" onclick="randomGame()">
+    🎲 Random Game
+  </button>
+
+</section>
+
+<main>
+
+  <div class="section-head">
+
+    <div class="title-area">
+      <h2>All Games</h2>
+      <span class="count" id="count">Loading...</span>
+    </div>
+
+    <div class="controls">
+      <button class="control" onclick="sortGames()">
+        ↕ Sort
+      </button>
+
+      <button class="control" onclick="toggleView()">
+        ▦ View
+      </button>
+    </div>
+
+  </div>
+
+  <div class="games" id="games">
+
+    <div class="loading">
+      <div class="spinner"></div>
+      Loading Sx alpha games...
+    </div>
+
+  </div>
+
+</main>
+
+<!-- GAME VIEWER -->
+
+<div class="viewer" id="viewer">
+
+  <div class="viewer-top">
+
+    <div class="viewer-title" id="viewerTitle">
+      Sx alpha
+    </div>
+
+    <div class="viewer-buttons">
+
+      <button onclick="fullscreenGame()">
+        ⛶ Fullscreen
+      </button>
+
+      <button onclick="openCurrentAboutBlank()">
+        ↗ New Tab
+      </button>
+
+      <button class="close" onclick="closeGame()">
+        ✕ Close
+      </button>
+
+    </div>
+
+  </div>
+
+  <div class="frame-wrap">
+    <iframe
+      id="gameFrame"
+      allow="fullscreen; autoplay; gamepad"
+      allowfullscreen>
+    </iframe>
+  </div>
+
+</div>
+
+<script>
+
+/* =========================================
+   SX ALPHA + GN-MATH GAME DATABASE
+========================================= */
+
+const ZONES_URL =
+  "https://cdn.jsdelivr.net/gh/gn-math/assets@main/zones.json";
+
+const COVER_URL =
+  "https://cdn.jsdelivr.net/gh/gn-math/covers@main";
+
+const HTML_URL =
+  "https://cdn.jsdelivr.net/gh/gn-math/html@main";
+
+let games = [];
+let filteredGames = [];
+let currentGame = null;
+let favorites = JSON.parse(
+  localStorage.getItem("sxAlphaFavorites") || "[]"
+);
+
+let sortMode = "name";
+let compact = false;
+
+/* =========================================
+   LOAD GAMES
+========================================= */
+
+async function loadGames(){
+
+  const container = document.getElementById("games");
+
+  try{
+
+    const response = await fetch(
+      ZONES_URL + "?t=" + Date.now()
+    );
+
+    if(!response.ok){
+      throw new Error("Could not load game database");
+    }
+
+    games = await response.json();
+
+    games = games.filter(game =>
+      game &&
+      game.name &&
+      game.url
+    );
+
+    filteredGames = [...games];
+
+    updateCount();
+    renderGames();
+
+  }catch(error){
+
+    console.error(error);
+
+    container.innerHTML = `
+      <div class="loading">
+        <h3>Unable to load games</h3>
+        <p>
+          The GN Math game database could not be reached.
+          Try refreshing the page.
+        </p>
+      </div>
+    `;
+
+    document.getElementById("count").textContent =
+      "Database unavailable";
+  }
+}
+
+/* =========================================
+   URL HELPERS
+========================================= */
+
+function replaceURLs(url){
+
+  if(!url) return "";
+
+  return url
+    .replaceAll("{COVER_URL}", COVER_URL)
+    .replaceAll("{HTML_URL}", HTML_URL);
+}
+
+function getCover(game){
+
+  if(!game.cover){
+    return "";
+  }
+
+  return replaceURLs(game.cover);
+}
+
+/* =========================================
+   RENDER
+========================================= */
+
+function renderGames(){
+
+  const container = document.getElementById("games");
+
+  container.innerHTML = "";
+
+  if(filteredGames.length === 0){
+
+    container.innerHTML = `
+      <div class="loading">
+        <h3>No games found</h3>
+        <p>Try another search.</p>
+      </div>
+    `;
+
+    return;
+  }
+
+  const fragment = document.createDocumentFragment();
+
+  filteredGames.forEach(game => {
+
+    const card = document.createElement("div");
+
+    card.className = "card";
+
+    card.onclick = () => openGame(game);
+
+    const image = document.createElement("img");
+
+    image.className = "cover";
+
+    image.loading = "lazy";
+
+    image.alt = game.name;
+
+    image.src = getCover(game);
+
+    image.onerror = function(){
+
+      this.src =
+        "data:image/svg+xml;charset=UTF-8," +
+        encodeURIComponent(`
+          <svg xmlns="http://www.w3.org/2000/svg"
+               width="500"
+               height="360"
+               viewBox="0 0 500 360">
+            <rect width="500" height="360"
+                  fill="#202a3c"/>
+            <text x="250"
+                  y="180"
+                  text-anchor="middle"
+                  dominant-baseline="middle"
+                  fill="#aab4cc"
+                  font-family="Arial"
+                  font-size="24">
+              ${escapeSVG(game.name)}
+            </text>
+          </svg>
+        `);
+
+    };
+
+    const info = document.createElement("div");
+
+    info.className = "info";
+
+    const name = document.createElement("div");
+
+    name.className = "game-name";
+
+    name.textContent = game.name;
+
+    const star = document.createElement("button");
+
+    star.className =
+      "star " +
+      (isFavorite(game.id) ? "active" : "");
+
+    star.textContent =
+      isFavorite(game.id) ? "★" : "☆";
+
+    star.title = "Favorite";
+
+    star.style.background = "none";
+    star.style.border = "0";
+    star.style.cursor = "pointer";
+
+    star.onclick = function(event){
+
+      event.stopPropagation();
+
+      toggleFavorite(game);
+
+      this.classList.toggle(
+        "active",
+        isFavorite(game.id)
+      );
+
+      this.textContent =
+        isFavorite(game.id) ? "★" : "☆";
+    };
+
+    info.appendChild(name);
+    info.appendChild(star);
+
+    card.appendChild(image);
+    card.appendChild(info);
+
+    fragment.appendChild(card);
+
+  });
+
+  container.appendChild(fragment);
+
+}
+
+/* =========================================
+   SEARCH
+========================================= */
+
+document.getElementById("search")
+.addEventListener("input", function(){
+
+  const query =
+    this.value.trim().toLowerCase();
+
+  filteredGames = games.filter(game =>
+    String(game.name || "")
+      .toLowerCase()
+      .includes(query)
+  );
+
+  updateCount();
+  renderGames();
+
+});
+
+/* =========================================
+   SORT
+========================================= */
+
+function sortGames(){
+
+  if(sortMode === "name"){
+    sortMode = "id";
+  }else if(sortMode === "id"){
+    sortMode = "random";
+  }else{
+    sortMode = "name";
+  }
+
+  if(sortMode === "name"){
+
+    filteredGames.sort((a,b) =>
+      String(a.name).localeCompare(
+        String(b.name)
+      )
+    );
+
+  }else if(sortMode === "id"){
+
+    filteredGames.sort((a,b) =>
+      Number(a.id || 0) -
+      Number(b.id || 0)
+    );
+
+  }else{
+
+    filteredGames.sort(() =>
+      Math.random() - .5
+    );
+
+  }
+
+  renderGames();
+
+}
+
+/* =========================================
+   VIEW
+========================================= */
+
+function toggleView(){
+
+  compact = !compact;
+
+  const grid =
+    document.getElementById("games");
+
+  if(compact){
+
+    grid.style.gridTemplateColumns =
+      "repeat(auto-fill,minmax(170px,1fr))";
+
+  }else{
+
+    grid.style.gridTemplateColumns = "";
+
+  }
+
+}
+
+/* =========================================
+   FAVORITES
+========================================= */
+
+function isFavorite(id){
+
+  return favorites.includes(String(id));
+
+}
+
+function toggleFavorite(game){
+
+  const id = String(game.id);
+
+  if(favorites.includes(id)){
+
+    favorites =
+      favorites.filter(x => x !== id);
+
+  }else{
+
+    favorites.push(id);
+
+  }
+
+  localStorage.setItem(
+    "sxAlphaFavorites",
+    JSON.stringify(favorites)
+  );
+
+}
+
+function showFavorites(){
+
+  filteredGames =
+    games.filter(game =>
+      isFavorite(game.id)
+    );
+
+  document.getElementById("search").value = "";
+
+  updateCount();
+  renderGames();
+
+}
+
+/* =========================================
+   RANDOM
+========================================= */
+
+function randomGame(){
+
+  if(!games.length) return;
+
+  const game =
+    games[
+      Math.floor(
+        Math.random() * games.length
+      )
+    ];
+
+  openGame(game);
+
+}
+
+/* =========================================
+   OPEN GAME
+========================================= */
+
+function openGame(game){
+
+  currentGame = game;
+
+  const viewer =
+    document.getElementById("viewer");
+
+  const frame =
+    document.getElementById("gameFrame");
+
+  document.getElementById("viewerTitle")
+    .textContent = game.name;
+
+  const url =
+    replaceURLs(game.url);
+
+  viewer.classList.add("show");
+
+  frame.src = "about:blank";
+
+  /*
+    GN Math games can either be direct URLs
+    or HTML files from the GN Math repository.
+  */
+
+  setTimeout(() => {
+
+    frame.src = url;
+
+  },50);
+
+  document.body.style.overflow = "hidden";
+
+}
+
+/* =========================================
+   CLOSE GAME
+========================================= */
+
+function closeGame(){
+
+  const viewer =
+    document.getElementById("viewer");
+
+  const frame =
+    document.getElementById("gameFrame");
+
+  viewer.classList.remove("show");
+
+  frame.src = "about:blank";
+
+  document.body.style.overflow = "";
+
+}
+
+/* =========================================
+   FULLSCREEN
+========================================= */
+
+function fullscreenGame(){
+
+  const frame =
+    document.getElementById("gameFrame");
+
+  if(frame.requestFullscreen){
+
+    frame.requestFullscreen();
+
+  }
+
+}
+
+/* =========================================
+   ABOUT:BLANK
+========================================= */
+
+function openCurrentAboutBlank(){
+
+  if(!currentGame){
+
+    randomGame();
+    return;
+
+  }
+
+  const url =
+    replaceURLs(currentGame.url);
+
+  const win =
+    window.open("about:blank","_blank");
+
+  if(!win){
+
+    alert(
+      "Please allow popups for Sx alpha."
+    );
+
+    return;
+
+  }
+
+  /*
+    Direct games can be opened normally.
+    GN Math HTML games are fetched and written
+    into the new blank page.
+  */
+
+  if(/^https?:\/\//i.test(url)){
+
+    fetch(url + "?t=" + Date.now())
+      .then(response => {
+
+        if(!response.ok)
+          throw new Error("Game could not load");
+
+        return response.text();
+
+      })
+      .then(html => {
+
+        win.document.open();
+        win.document.write(html);
+        win.document.close();
+
+      })
+      .catch(() => {
+
+        win.location.href = url;
+
+      });
+
+  }else{
+
+    win.location.href = url;
+
+  }
+
+}
+
+/* =========================================
+   COUNT
+========================================= */
+
+function updateCount(){
+
+  document.getElementById("count")
+    .textContent =
+    filteredGames.length +
+    " games";
+
+}
+
+/* =========================================
+   UTILITIES
+========================================= */
+
+function escapeSVG(text){
+
+  return String(text)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&apos;");
+
+}
+
+/* =========================================
+   ESCAPE KEY
+========================================= */
+
+document.addEventListener("keydown",event => {
+
+  if(event.key === "Escape"){
+
+    closeGame();
+
+  }
+
+});
+
+/* =========================================
+   START
+========================================= */
+
+loadGames();
+
+</script>
+
+</body>
+</html>
