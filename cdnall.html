@@ -9,38 +9,36 @@
 :root{
   --green:#00ff88;
   --green2:#39ff14;
-  --bg:#050807;
-  --panel:#0b100d;
-  --panel2:#101712;
-  --border:#183b27;
-  --text:#eafff2;
-  --muted:#83a995;
+  --bg:#030604;
+  --panel:#09100b;
+  --panel2:#0d1710;
+  --border:#19472b;
+  --text:#effff5;
+  --muted:#86a993;
 }
 
-*{
-  box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 body{
   margin:0;
   min-height:100vh;
-  background:
-    radial-gradient(circle at 50% -10%,#123d24 0,#07100b 35%,#050807 70%);
   color:var(--text);
   font-family:Arial,Helvetica,sans-serif;
+  background:
+    radial-gradient(circle at 50% -10%,#154426 0,#07100a 35%,#030604 75%);
 }
 
 header{
-  padding:30px 20px 18px;
   text-align:center;
+  padding:32px 15px 20px;
 }
 
 .logo{
-  font-size:42px;
+  font-size:43px;
   font-weight:900;
-  color:var(--green);
   letter-spacing:3px;
-  text-shadow:0 0 18px #00ff8866;
+  color:var(--green);
+  text-shadow:0 0 20px #00ff8870;
 }
 
 .logo span{
@@ -53,17 +51,17 @@ header{
 }
 
 .container{
-  width:min(1000px,92%);
+  width:min(1100px,92%);
   margin:25px auto 60px;
 }
 
 .card{
-  background:linear-gradient(145deg,#0d1510,#080d0a);
+  background:linear-gradient(145deg,#0b140d,#070c08);
   border:1px solid var(--border);
   border-radius:18px;
   padding:22px;
   margin-bottom:18px;
-  box-shadow:0 10px 35px #0008;
+  box-shadow:0 12px 40px #0009;
 }
 
 h2{
@@ -74,7 +72,7 @@ h2{
 label{
   display:block;
   margin-bottom:8px;
-  color:#bde9cd;
+  color:#c9f5d8;
   font-weight:bold;
 }
 
@@ -86,41 +84,40 @@ label{
 input{
   flex:1;
   min-width:0;
-  background:#050905;
-  border:1px solid #24583a;
-  color:white;
   padding:15px;
   border-radius:10px;
+  border:1px solid #285e3d;
   outline:none;
+  background:#030703;
+  color:white;
   font-size:15px;
 }
 
 input:focus{
   border-color:var(--green);
-  box-shadow:0 0 12px #00ff8830;
+  box-shadow:0 0 15px #00ff8830;
 }
 
 button{
   border:0;
   border-radius:10px;
   padding:13px 18px;
-  cursor:pointer;
-  font-weight:bold;
   background:var(--green);
   color:#001b0d;
+  font-weight:bold;
+  cursor:pointer;
   transition:.15s;
 }
 
 button:hover{
   transform:translateY(-1px);
-  box-shadow:0 0 18px #00ff8844;
+  box-shadow:0 0 18px #00ff8848;
 }
 
 .providers{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
   gap:14px;
-  margin-top:18px;
 }
 
 .provider{
@@ -131,14 +128,30 @@ button:hover{
 }
 
 .provider h3{
-  margin:0 0 5px;
+  margin:0 0 6px;
   color:var(--green);
+}
+
+.provider-name{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+}
+
+.badge{
+  font-size:10px;
+  padding:4px 7px;
+  border-radius:20px;
+  background:#10351f;
+  color:#82ffb2;
+  border:1px solid #22643b;
 }
 
 .status{
   font-size:12px;
-  color:#7fd49b;
-  margin-bottom:12px;
+  color:#78a88a;
+  margin:7px 0 12px;
 }
 
 .urlbox{
@@ -149,15 +162,15 @@ button:hover{
 .url{
   flex:1;
   min-width:0;
-  background:#050805;
-  border:1px solid #1d3928;
+  background:#030603;
+  border:1px solid #1a3825;
   border-radius:8px;
   padding:10px;
+  color:#baffd0;
   font-family:monospace;
-  font-size:12px;
-  color:#b9ffd0;
-  overflow:hidden;
+  font-size:11px;
   white-space:nowrap;
+  overflow:hidden;
   text-overflow:ellipsis;
 }
 
@@ -166,51 +179,51 @@ button:hover{
   font-size:12px;
 }
 
-.info{
-  color:#91ad9c;
-  line-height:1.6;
-}
-
-.warning{
-  display:none;
-  background:#211a08;
-  border:1px solid #806319;
-  color:#ffe9a3;
-  padding:12px;
-  border-radius:10px;
-  margin-top:15px;
-}
-
 .detected{
   display:none;
   margin-top:15px;
   padding:13px;
   border-radius:10px;
-  background:#081c10;
-  border:1px solid #1d6b3e;
+  background:#071d10;
+  border:1px solid #1e7040;
+  color:#baffd0;
 }
 
 .detected strong{
   color:var(--green);
 }
 
+.warning{
+  display:none;
+  margin-top:15px;
+  padding:13px;
+  border-radius:10px;
+  background:#241b08;
+  border:1px solid #80631b;
+  color:#ffe9a5;
+}
+
 .empty{
   text-align:center;
-  padding:30px;
-  color:#607b69;
-  border:1px dashed #21452e;
+  padding:35px;
+  border:1px dashed #245337;
   border-radius:12px;
+  color:#65816e;
+}
+
+.info{
+  color:#91ad9b;
+  line-height:1.65;
 }
 
 footer{
   text-align:center;
   padding:30px;
-  color:#567462;
+  color:#557260;
   font-size:13px;
 }
 
-@media(max-width:600px){
-
+@media(max-width:650px){
   .inputrow{
     flex-direction:column;
   }
@@ -234,139 +247,237 @@ footer{
 
 <header>
   <div class="logo">☢ URANIUM<span> CDN</span></div>
-
   <div class="subtitle">
-    Universal CDN URL Generator
+    Universal CDN Generator
   </div>
 </header>
 
-
 <main class="container">
 
-  <section class="card">
+<section class="card">
 
-    <h2>⚡ CDN Generator</h2>
+<h2>⚡ Generate CDN URLs</h2>
 
-    <label for="source">
-      GitHub repository, GitHub file, npm package, or CDN URL
-    </label>
+<label for="source">
+  GitHub, npm, GitLab, Bitbucket, or package URL
+</label>
 
-    <div class="inputrow">
+<div class="inputrow">
 
-      <input
-        id="source"
-        type="text"
-        placeholder="https://github.com/user/repo/blob/main/file.js"
-        autocomplete="off"
-      >
+<input
+  id="source"
+  type="text"
+  autocomplete="off"
+  placeholder="https://github.com/user/repo/blob/main/file.js"
+>
 
-      <button id="generateBtn">
-        Generate
-      </button>
+<button id="generateBtn">
+Generate
+</button>
 
-    </div>
+</div>
 
-    <div id="detected" class="detected"></div>
+<div id="detected" class="detected"></div>
+<div id="warning" class="warning"></div>
 
-    <div id="warning" class="warning"></div>
-
-  </section>
-
-
-  <section class="card">
-
-    <h2>🌐 CDN Providers</h2>
-
-    <div id="providers">
-
-      <div class="empty">
-        Enter a source above to generate CDN URLs.
-      </div>
-
-    </div>
-
-  </section>
+</section>
 
 
-  <section class="card">
+<section class="card">
 
-    <h2>ℹ About Uranium CDN</h2>
+<h2>🌐 Available Providers</h2>
 
-    <div class="info">
+<div id="providers">
 
-      Uranium CDN converts supported GitHub repositories,
-      GitHub files, npm packages, and CDN URLs into
-      convenient URLs for multiple CDN providers.
+<div class="empty">
+Enter a source above.
+</div>
 
-      <br><br>
+</div>
 
-      Uranium does not upload or copy your files.
-      The generated URLs point directly to the selected
-      CDN provider.
+</section>
 
-    </div>
 
-  </section>
+<section class="card">
+
+<h2>☢ About Uranium CDN</h2>
+
+<div class="info">
+
+Uranium CDN detects the source you enter and generates
+compatible URLs for multiple public CDN services.
+
+<br><br>
+
+Not every provider supports every type of source.
+Uranium only generates providers where the URL format
+is appropriate.
+
+</div>
+
+</section>
 
 </main>
 
-
 <footer>
-  ☢ Uranium CDN • Powered by the web
+☢ Uranium CDN • Universal CDN Generator
 </footer>
 
 
 <script>
 
-const source = document.getElementById("source");
-const providers = document.getElementById("providers");
-const detected = document.getElementById("detected");
-const warning = document.getElementById("warning");
-const generateBtn = document.getElementById("generateBtn");
+const source =
+document.getElementById("source");
+
+const providers =
+document.getElementById("providers");
+
+const detected =
+document.getElementById("detected");
+
+const warning =
+document.getElementById("warning");
+
+const generateBtn =
+document.getElementById("generateBtn");
 
 
-/* --------------------------------
-   ENTER KEY
--------------------------------- */
-
-source.addEventListener("keydown", function(event){
-
-  if(event.key === "Enter"){
-    generate();
-  }
-
+source.addEventListener("keydown",e=>{
+  if(e.key==="Enter") generate();
 });
 
+generateBtn.addEventListener("click",generate);
 
-generateBtn.addEventListener("click", generate);
 
+/* ================================
+   HELPERS
+================================ */
 
-/* --------------------------------
-   ESCAPE HTML
--------------------------------- */
+function esc(text){
 
-function escapeHTML(text){
-
-  return String(text).replace(/[&<>"']/g,function(char){
-
-    const map = {
-      "&":"&amp;",
-      "<":"&lt;",
-      ">":"&gt;",
-      '"':"&quot;",
-      "'":"&#039;"
-    };
-
-    return map[char];
-
-  });
+  return String(text).replace(/[&<>"']/g,c=>({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#039;"
+  }[c]));
 
 }
 
 
-/* --------------------------------
+function encPath(path){
+
+  return path
+    .split("/")
+    .map(encodeURIComponent)
+    .join("/");
+
+}
+
+
+function showDetected(text){
+
+  detected.innerHTML =
+    "<strong>Detected:</strong> " + esc(text);
+
+  detected.style.display="block";
+
+}
+
+
+function showWarning(text){
+
+  warning.textContent=text;
+
+  warning.style.display="block";
+
+}
+
+
+function typeOfFile(file){
+
+  if(!file) return "file";
+
+  const x=file.toLowerCase();
+
+  if(
+    x.endsWith(".js") ||
+    x.endsWith(".mjs") ||
+    x.endsWith(".cjs") ||
+    x.endsWith(".ts")
+  ) return "js";
+
+  if(x.endsWith(".css"))
+    return "css";
+
+  if(x.endsWith(".json"))
+    return "json";
+
+  if(
+    x.endsWith(".png") ||
+    x.endsWith(".jpg") ||
+    x.endsWith(".jpeg") ||
+    x.endsWith(".gif") ||
+    x.endsWith(".webp") ||
+    x.endsWith(".svg")
+  ) return "image";
+
+  return "file";
+}
+
+
+/* ================================
+   CARD
+================================ */
+
+function card(name,url,badge="CDN"){
+
+  if(!url) return "";
+
+  return `
+
+  <div class="provider">
+
+    <div class="provider-name">
+
+      <h3>${esc(name)}</h3>
+
+      <span class="badge">
+        ${esc(badge)}
+      </span>
+
+    </div>
+
+    <div class="status">
+      Generated URL
+    </div>
+
+    <div class="urlbox">
+
+      <div
+        class="url"
+        title="${esc(url)}">
+        ${esc(url)}
+      </div>
+
+      <button
+        class="copy"
+        onclick="copyURL(this,${JSON.stringify(url)})">
+        Copy
+      </button>
+
+    </div>
+
+  </div>
+
+  `;
+}
+
+
+/* ================================
    COPY
--------------------------------- */
+================================ */
 
 async function copyURL(button,url){
 
@@ -374,196 +485,78 @@ async function copyURL(button,url){
 
     await navigator.clipboard.writeText(url);
 
-    const oldText = button.textContent;
+  }catch{
 
-    button.textContent = "Copied!";
+    const box=document.createElement("textarea");
 
-    setTimeout(function(){
+    box.value=url;
 
-      button.textContent = oldText;
+    document.body.appendChild(box);
 
-    },1200);
-
-  }catch(error){
-
-    const textarea = document.createElement("textarea");
-
-    textarea.value = url;
-
-    document.body.appendChild(textarea);
-
-    textarea.select();
+    box.select();
 
     document.execCommand("copy");
 
-    textarea.remove();
-
-    button.textContent = "Copied!";
-
-    setTimeout(function(){
-
-      button.textContent = "Copy";
-
-    },1200);
+    box.remove();
 
   }
+
+  const old=button.textContent;
+
+  button.textContent="Copied!";
+
+  setTimeout(()=>{
+    button.textContent=old;
+  },1200);
 
 }
 
 
-/* --------------------------------
-   DETECT FILE TYPE
--------------------------------- */
-
-function getFileType(file){
-
-  if(!file){
-    return "file";
-  }
-
-  const lower = file.toLowerCase();
-
-  if(
-    lower.endsWith(".js") ||
-    lower.endsWith(".mjs") ||
-    lower.endsWith(".cjs")
-  ){
-
-    return "js";
-
-  }
-
-  if(lower.endsWith(".css")){
-
-    return "css";
-
-  }
-
-  if(lower.endsWith(".json")){
-
-    return "json";
-
-  }
-
-  if(
-    lower.endsWith(".png") ||
-    lower.endsWith(".jpg") ||
-    lower.endsWith(".jpeg") ||
-    lower.endsWith(".gif") ||
-    lower.endsWith(".webp") ||
-    lower.endsWith(".svg")
-  ){
-
-    return "image";
-
-  }
-
-  return "file";
-
-}
-
-
-/* --------------------------------
-   CREATE PROVIDER CARD
--------------------------------- */
-
-function makeCard(name,url,type){
-
-  if(!url){
-    return "";
-  }
-
-  const safeURL = escapeHTML(url);
-
-  return `
-
-    <div class="provider">
-
-      <h3>${escapeHTML(name)}</h3>
-
-      <div class="status">
-        CDN URL
-      </div>
-
-      <div class="urlbox">
-
-        <div
-          class="url"
-          title="${safeURL}">
-          ${safeURL}
-        </div>
-
-        <button
-          class="copy"
-          onclick="copyURL(this, ${JSON.stringify(url)})">
-          Copy
-        </button>
-
-      </div>
-
-    </div>
-
-  `;
-
-}
-
-
-/* --------------------------------
-   PARSE GITHUB URL
--------------------------------- */
+/* ================================
+   GITHUB
+================================ */
 
 function parseGitHub(value){
 
   try{
 
-    const url = new URL(value);
+    const u=new URL(value);
 
     if(
-      url.hostname !== "github.com" &&
-      url.hostname !== "www.github.com"
-    ){
+      u.hostname!=="github.com" &&
+      u.hostname!=="www.github.com"
+    ) return null;
 
-      return null;
-
-    }
-
-    const parts =
-      url.pathname
+    const p=u.pathname
       .split("/")
       .filter(Boolean);
 
-    if(parts.length < 2){
-      return null;
-    }
+    if(p.length<2) return null;
 
-    const owner = parts[0];
-    const repo = parts[1];
-
-    let branch = "main";
-    let file = "";
-
-    if(parts[2] === "blob"){
-
-      branch = parts[3] || "main";
-      file = parts.slice(4).join("/");
-
-    }
-
-    else if(parts[2] === "tree"){
-
-      branch = parts[3] || "main";
-      file = parts.slice(4).join("/");
-
-    }
-
-    return {
-      owner,
-      repo,
-      branch,
-      file
+    const result={
+      owner:p[0],
+      repo:p[1],
+      branch:"main",
+      file:""
     };
 
-  }catch(error){
+    if(p[2]==="blob"){
+
+      result.branch=p[3]||"main";
+      result.file=p.slice(4).join("/");
+
+    }
+
+    if(p[2]==="tree"){
+
+      result.branch=p[3]||"main";
+      result.file=p.slice(4).join("/");
+
+    }
+
+    return result;
+
+  }catch{
 
     return null;
 
@@ -571,47 +564,31 @@ function parseGitHub(value){
 
 }
 
-
-/* --------------------------------
-   PARSE RAW GITHUB
--------------------------------- */
 
 function parseRawGitHub(value){
 
   try{
 
-    const url = new URL(value);
+    const u=new URL(value);
 
     if(
-      url.hostname !== "raw.githubusercontent.com"
-    ){
+      u.hostname!=="raw.githubusercontent.com"
+    ) return null;
 
-      return null;
-
-    }
-
-    const parts =
-      url.pathname
+    const p=u.pathname
       .split("/")
       .filter(Boolean);
 
-    if(parts.length < 4){
-      return null;
-    }
+    if(p.length<4) return null;
 
     return {
-
-      owner:parts[0],
-
-      repo:parts[1],
-
-      branch:parts[2],
-
-      file:parts.slice(3).join("/")
-
+      owner:p[0],
+      repo:p[1],
+      branch:p[2],
+      file:p.slice(3).join("/")
     };
 
-  }catch(error){
+  }catch{
 
     return null;
 
@@ -620,295 +597,421 @@ function parseRawGitHub(value){
 }
 
 
-/* --------------------------------
-   GITHUB GENERATOR
--------------------------------- */
+function generateGitHub(g){
 
-function generateGitHub(gh){
+  if(!g.file){
 
-  const owner = gh.owner;
-  const repo = gh.repo;
-  const branch = gh.branch || "main";
-  const file = gh.file;
+    showDetected(
+      "GitHub repository: "+
+      g.owner+"/"+g.repo
+    );
 
-  if(!file){
-
-    detected.innerHTML =
-      "<strong>GitHub repository detected.</strong> Add a file path to generate a direct CDN URL.";
-
-    detected.style.display = "block";
-
-    warning.textContent =
-      "Example: https://github.com/user/repo/blob/main/file.js";
-
-    warning.style.display = "block";
+    showWarning(
+      "Add a file path, for example /blob/main/index.js."
+    );
 
     return;
 
   }
 
-  const encodedFile =
-    file
-    .split("/")
-    .map(encodeURIComponent)
-    .join("/");
+  const file=encPath(g.file);
+  const branch=encodeURIComponent(g.branch);
 
-  const encodedBranch =
-    encodeURIComponent(branch);
+  const base =
+    g.owner+"/"+g.repo;
+
+  const urls=[];
 
 
   /* jsDelivr */
 
-  const jsdelivr =
-    "https://cdn.jsdelivr.net/gh/" +
-    owner + "/" +
-    repo + "@" +
-    encodedBranch + "/" +
-    encodedFile;
+  urls.push(
+    card(
+      "jsDelivr",
+      `https://cdn.jsdelivr.net/gh/${base}@${branch}/${file}`,
+      "GitHub"
+    )
+  );
 
 
-  /* Fastly jsDelivr */
+  /* Fastly */
 
-  const fastly =
-    "https://fastly.jsdelivr.net/gh/" +
-    owner + "/" +
-    repo + "@" +
-    encodedBranch + "/" +
-    encodedFile;
+  urls.push(
+    card(
+      "Fastly jsDelivr",
+      `https://fastly.jsdelivr.net/gh/${base}@${branch}/${file}`,
+      "GitHub"
+    )
+  );
 
 
   /* GitHub Raw */
 
-  const githubRaw =
-    "https://raw.githubusercontent.com/" +
-    owner + "/" +
-    repo + "/" +
-    encodedBranch + "/" +
-    encodedFile;
+  urls.push(
+    card(
+      "GitHub Raw",
+      `https://raw.githubusercontent.com/${base}/${branch}/${file}`,
+      "GitHub"
+    )
+  );
 
 
   /* esm.sh */
 
-  const esm =
-    "https://esm.sh/gh/" +
-    owner + "/" +
-    repo + "@" +
-    encodedBranch + "/" +
-    encodedFile;
-
-
-  const type = getFileType(file);
-
-
-  detected.innerHTML =
-    "<strong>Detected:</strong> GitHub file — " +
-    escapeHTML(owner + "/" + repo + "/" + file);
-
-  detected.style.display = "block";
-
-
-  providers.innerHTML =
-
-    makeCard(
-      "jsDelivr",
-      jsdelivr,
-      type
-    )
-
-    +
-
-    makeCard(
-      "Fastly jsDelivr",
-      fastly,
-      type
-    )
-
-    +
-
-    makeCard(
-      "GitHub Raw",
-      githubRaw,
-      type
-    )
-
-    +
-
-    makeCard(
+  urls.push(
+    card(
       "esm.sh",
-      esm,
-      type
-    );
+      `https://esm.sh/gh/${base}@${branch}/${file}`,
+      "ESM"
+    )
+  );
+
+
+  /* raw.esm.sh */
+
+  urls.push(
+    card(
+      "raw.esm.sh",
+      `https://raw.esm.sh/gh/${base}@${branch}/${file}`,
+      "Raw ESM"
+    )
+  );
+
+
+  /* Statically */
+
+  urls.push(
+    card(
+      "Statically",
+      `https://cdn.statically.io/gh/${base}@${branch}/${file}`,
+      "GitHub"
+    )
+  );
+
+
+  providers.innerHTML=urls.join("");
+
+  showDetected(
+    "GitHub file: "+
+    g.owner+"/"+g.repo+"/"+g.file
+  );
 
 }
 
 
-/* --------------------------------
-   NPM DETECTION
--------------------------------- */
+/* ================================
+   GITLAB
+================================ */
 
-function getNpmPackage(value){
+function parseGitLab(value){
 
-  let packageName =
-    value.trim();
+  try{
 
-  packageName =
-    packageName.replace(
-      /^https?:\/\/(www\.)?npmjs\.com\/package\//,
-      ""
-    );
+    const u=new URL(value);
 
-  if(
-    packageName.startsWith("http://") ||
-    packageName.startsWith("https://")
-  ){
+    if(
+      u.hostname!=="gitlab.com" &&
+      u.hostname!=="www.gitlab.com"
+    ) return null;
+
+    const p=u.pathname
+      .split("/")
+      .filter(Boolean);
+
+    const blob=p.indexOf("-");
+
+    let idx=p.indexOf("blob");
+
+    if(idx===-1)
+      idx=p.indexOf("raw");
+
+    if(idx===-1)
+      return null;
+
+    const project=p.slice(0,idx).join("/");
+
+    const branch=p[idx+1];
+
+    const file=p.slice(idx+2).join("/");
+
+    return {
+      project,
+      branch,
+      file
+    };
+
+  }catch{
 
     return null;
 
   }
 
+}
 
-  if(packageName.startsWith("@")){
 
-    const parts =
-      packageName.split("/");
+function generateGitLab(g){
 
-    if(parts.length >= 2){
+  const project=encPath(g.project);
+  const branch=encodeURIComponent(g.branch);
+  const file=encPath(g.file);
 
-      return parts[0] + "/" + parts[1];
+  providers.innerHTML=
+
+    card(
+      "GitLab Raw",
+      `https://gitlab.com/${project}/-/raw/${branch}/${file}`,
+      "GitLab"
+    )
+
+    +
+
+    card(
+      "Statically",
+      `https://cdn.statically.io/gl/${project}@${branch}/${file}`,
+      "GitLab"
+    );
+
+
+  showDetected(
+    "GitLab file: "+g.project+"/"+g.file
+  );
+
+}
+
+
+/* ================================
+   BITBUCKET
+================================ */
+
+function parseBitbucket(value){
+
+  try{
+
+    const u=new URL(value);
+
+    if(
+      u.hostname!=="bitbucket.org" &&
+      u.hostname!=="www.bitbucket.org"
+    ) return null;
+
+    const p=u.pathname
+      .split("/")
+      .filter(Boolean);
+
+    if(p.length<2)
+      return null;
+
+    const user=p[0];
+    const repo=p[1];
+
+    let branch="main";
+    let file="";
+
+    const src=p.indexOf("src");
+
+    if(src!==-1){
+
+      branch=p[src+1]||"main";
+      file=p.slice(src+2).join("/");
 
     }
+
+    return {
+      user,
+      repo,
+      branch,
+      file
+    };
+
+  }catch{
+
+    return null;
 
   }
 
-
-  return packageName.split("/")[0];
-
 }
 
 
-/* --------------------------------
-   NPM GENERATOR
--------------------------------- */
+function generateBitbucket(g){
 
-function generateNpm(packageName){
+  if(!g.file){
 
-  const jsdelivr =
-    "https://cdn.jsdelivr.net/npm/" +
-    packageName;
-
-
-  const fastly =
-    "https://fastly.jsdelivr.net/npm/" +
-    packageName;
-
-
-  const unpkg =
-    "https://unpkg.com/" +
-    packageName;
-
-
-  const esm =
-    "https://esm.sh/" +
-    packageName;
-
-
-  detected.innerHTML =
-    "<strong>Detected:</strong> npm package — " +
-    escapeHTML(packageName);
-
-  detected.style.display = "block";
-
-
-  providers.innerHTML =
-
-    makeCard(
-      "jsDelivr",
-      jsdelivr,
-      "js"
-    )
-
-    +
-
-    makeCard(
-      "Fastly jsDelivr",
-      fastly,
-      "js"
-    )
-
-    +
-
-    makeCard(
-      "UNPKG",
-      unpkg,
-      "js"
-    )
-
-    +
-
-    makeCard(
-      "esm.sh",
-      esm,
-      "js"
+    showWarning(
+      "Add a file path to the Bitbucket URL."
     );
 
+    return;
+
+  }
+
+  const file=encPath(g.file);
+
+  providers.innerHTML=
+
+    card(
+      "Bitbucket",
+      `https://bitbucket.org/${g.user}/${g.repo}/raw/${g.branch}/${file}`,
+      "Bitbucket"
+    )
+
+    +
+
+    card(
+      "Statically",
+      `https://cdn.statically.io/bb/${g.user}/${g.repo}@${g.branch}/${file}`,
+      "Bitbucket"
+    );
+
+
+  showDetected(
+    "Bitbucket file: "+
+    g.user+"/"+g.repo+"/"+g.file
+  );
+
 }
 
 
-/* --------------------------------
+/* ================================
+   NPM
+================================ */
+
+function npmName(value){
+
+  let x=value.trim();
+
+  x=x.replace(
+    /^https?:\/\/(www\.)?npmjs\.com\/package\//,
+    ""
+  );
+
+  if(
+    x.startsWith("http://") ||
+    x.startsWith("https://")
+  ) return null;
+
+  if(x.startsWith("@")){
+
+    const p=x.split("/");
+
+    if(p.length>=2)
+      return p[0]+"/"+p[1];
+
+  }
+
+  return x.split("/")[0];
+
+}
+
+
+function generateNpm(pkg){
+
+  providers.innerHTML=
+
+    card(
+      "jsDelivr",
+      `https://cdn.jsdelivr.net/npm/${pkg}`,
+      "npm"
+    )
+
+    +
+
+    card(
+      "Fastly jsDelivr",
+      `https://fastly.jsdelivr.net/npm/${pkg}`,
+      "npm"
+    )
+
+    +
+
+    card(
+      "UNPKG",
+      `https://unpkg.com/${pkg}`,
+      "npm"
+    )
+
+    +
+
+    card(
+      "esm.sh",
+      `https://esm.sh/${pkg}`,
+      "npm / ESM"
+    )
+
+    +
+
+    card(
+      "JSPM",
+      `https://jspm.dev/${pkg}`,
+      "npm / ESM"
+    )
+
+    +
+
+    card(
+      "JSPM Production",
+      `https://ga.jspm.io/npm:${pkg}/`,
+      "npm / ESM"
+    )
+
+    +
+
+    card(
+      "Statically",
+      `https://cdn.statically.io/npm/${pkg}`,
+      "npm"
+    );
+
+
+  showDetected(
+    "npm package: "+pkg
+  );
+
+}
+
+
+/* ================================
    EXISTING CDN
--------------------------------- */
+================================ */
 
-function detectExistingCDN(value){
+function existingCDN(value){
 
-  const providersList = [
+  const known=[
 
-    {
-      name:"jsDelivr",
-      test:"https://cdn.jsdelivr.net/"
-    },
+    ["jsDelivr","https://cdn.jsdelivr.net/"],
 
-    {
-      name:"Fastly jsDelivr",
-      test:"https://fastly.jsdelivr.net/"
-    },
+    ["Fastly jsDelivr","https://fastly.jsdelivr.net/"],
 
-    {
-      name:"GitHub Raw",
-      test:"https://raw.githubusercontent.com/"
-    },
+    ["GitHub Raw","https://raw.githubusercontent.com/"],
 
-    {
-      name:"UNPKG",
-      test:"https://unpkg.com/"
-    },
+    ["UNPKG","https://unpkg.com/"],
 
-    {
-      name:"esm.sh",
-      test:"https://esm.sh/"
-    }
+    ["esm.sh","https://esm.sh/"],
+
+    ["raw.esm.sh","https://raw.esm.sh/"],
+
+    ["JSPM","https://jspm.dev/"],
+
+    ["Statically","https://cdn.statically.io/"],
+
+    ["cdnjs","https://cdnjs.cloudflare.com/"]
 
   ];
 
 
-  for(const provider of providersList){
+  for(const item of known){
 
-    if(value.startsWith(provider.test)){
+    if(value.startsWith(item[1])){
 
-      detected.innerHTML =
-        "<strong>Detected:</strong> " +
-        escapeHTML(provider.name) +
-        " URL";
-
-      detected.style.display = "block";
-
-
-      providers.innerHTML =
-        makeCard(
-          provider.name,
+      providers.innerHTML=
+        card(
+          item[0],
           value,
-          getFileType(value)
+          "Existing URL"
         );
 
+      showDetected(
+        "Existing "+item[0]+" URL"
+      );
 
       return true;
 
@@ -921,32 +1024,59 @@ function detectExistingCDN(value){
 }
 
 
-/* --------------------------------
-   MAIN GENERATOR
--------------------------------- */
+/* ================================
+   JSR
+================================ */
+
+function generateJSR(value){
+
+  if(!value.startsWith("jsr:"))
+    return false;
+
+  const pkg=
+    value.replace(/^jsr:/,"");
+
+  providers.innerHTML=
+
+    card(
+      "esm.sh / JSR",
+      `https://esm.sh/jsr/${pkg}`,
+      "JSR"
+    );
+
+  showDetected(
+    "JSR package: "+pkg
+  );
+
+  return true;
+
+}
+
+
+/* ================================
+   MAIN
+================================ */
 
 function generate(){
 
-  const value =
+  const value=
     source.value.trim();
 
 
-  providers.innerHTML =
+  providers.innerHTML=
     `<div class="empty">
-      Enter a source above to generate CDN URLs.
+      Enter a source above.
     </div>`;
 
-
-  detected.style.display = "none";
-  warning.style.display = "none";
+  detected.style.display="none";
+  warning.style.display="none";
 
 
   if(!value){
 
-    warning.textContent =
-      "Please enter a GitHub URL or npm package.";
-
-    warning.style.display = "block";
+    showWarning(
+      "Enter a GitHub URL, GitLab URL, Bitbucket URL, npm package, or CDN URL."
+    );
 
     return;
 
@@ -955,28 +1085,55 @@ function generate(){
 
   /* Existing CDN */
 
-  if(detectExistingCDN(value)){
+  if(existingCDN(value))
     return;
-  }
+
+
+  /* JSR */
+
+  if(generateJSR(value))
+    return;
 
 
   /* GitHub */
 
-  let github =
+  let github=
     parseGitHub(value);
 
-
-  if(!github){
-
-    github =
-      parseRawGitHub(value);
-
-  }
-
+  if(!github)
+    github=parseRawGitHub(value);
 
   if(github){
 
     generateGitHub(github);
+
+    return;
+
+  }
+
+
+  /* GitLab */
+
+  const gitlab=
+    parseGitLab(value);
+
+  if(gitlab){
+
+    generateGitLab(gitlab);
+
+    return;
+
+  }
+
+
+  /* Bitbucket */
+
+  const bitbucket=
+    parseBitbucket(value);
+
+  if(bitbucket){
+
+    generateBitbucket(bitbucket);
 
     return;
 
@@ -990,13 +1147,12 @@ function generate(){
     !value.startsWith("https://")
   ){
 
-    const packageName =
-      getNpmPackage(value);
+    const pkg=
+      npmName(value);
 
+    if(pkg){
 
-    if(packageName){
-
-      generateNpm(packageName);
+      generateNpm(pkg);
 
       return;
 
@@ -1007,10 +1163,9 @@ function generate(){
 
   /* Unknown */
 
-  warning.textContent =
-    "I couldn't recognize that source. Try a GitHub file URL, GitHub Raw URL, npm package name, or an existing CDN URL.";
-
-  warning.style.display = "block";
+  showWarning(
+    "Uranium couldn't identify that source. Try a GitHub file, GitLab file, Bitbucket file, npm package, or supported CDN URL."
+  );
 
 }
 
