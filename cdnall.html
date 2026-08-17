@@ -17,7 +17,9 @@
   --muted:#83a995;
 }
 
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box;
+}
 
 body{
   margin:0;
@@ -29,7 +31,7 @@ body{
 }
 
 header{
-  padding:25px 20px 15px;
+  padding:30px 20px 18px;
   text-align:center;
 }
 
@@ -46,7 +48,7 @@ header{
 }
 
 .subtitle{
-  margin-top:7px;
+  margin-top:8px;
   color:var(--muted);
 }
 
@@ -65,7 +67,7 @@ header{
 }
 
 h2{
-  margin:0 0 15px;
+  margin:0 0 16px;
   color:var(--green);
 }
 
@@ -114,12 +116,6 @@ button:hover{
   box-shadow:0 0 18px #00ff8844;
 }
 
-.secondary{
-  background:#142219;
-  color:#bfffd5;
-  border:1px solid #28573b;
-}
-
 .providers{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
@@ -152,6 +148,7 @@ button:hover{
 
 .url{
   flex:1;
+  min-width:0;
   background:#050805;
   border:1px solid #1d3928;
   border-radius:8px;
@@ -167,14 +164,6 @@ button:hover{
 .copy{
   padding:9px 12px;
   font-size:12px;
-}
-
-.embed{
-  margin-top:10px;
-  color:#789985;
-  font-family:monospace;
-  font-size:11px;
-  word-break:break-all;
 }
 
 .info{
@@ -205,6 +194,14 @@ button:hover{
   color:var(--green);
 }
 
+.empty{
+  text-align:center;
+  padding:30px;
+  color:#607b69;
+  border:1px dashed #21452e;
+  border-radius:12px;
+}
+
 footer{
   text-align:center;
   padding:30px;
@@ -213,6 +210,7 @@ footer{
 }
 
 @media(max-width:600px){
+
   .inputrow{
     flex-direction:column;
   }
@@ -224,6 +222,10 @@ footer{
   .logo{
     font-size:34px;
   }
+
+  .providers{
+    grid-template-columns:1fr;
+  }
 }
 </style>
 </head>
@@ -232,10 +234,12 @@ footer{
 
 <header>
   <div class="logo">☢ URANIUM<span> CDN</span></div>
+
   <div class="subtitle">
     Universal CDN URL Generator
   </div>
 </header>
+
 
 <main class="container">
 
@@ -243,58 +247,74 @@ footer{
 
     <h2>⚡ CDN Generator</h2>
 
-    <label for="source">GitHub repository, GitHub file, npm package, or CDN URL</label>
+    <label for="source">
+      GitHub repository, GitHub file, npm package, or CDN URL
+    </label>
 
     <div class="inputrow">
+
       <input
         id="source"
+        type="text"
         placeholder="https://github.com/user/repo/blob/main/file.js"
         autocomplete="off"
       >
 
-      <button onclick="generate()">Generate</button>
+      <button id="generateBtn">
+        Generate
+      </button>
+
     </div>
 
     <div id="detected" class="detected"></div>
+
     <div id="warning" class="warning"></div>
 
   </section>
+
 
   <section class="card">
 
     <h2>🌐 CDN Providers</h2>
 
-    <div id="providers" class="providers">
+    <div id="providers">
 
-      <div class="provider">
-        <h3>Waiting for URL</h3>
-        <div class="status">Enter a source above</div>
+      <div class="empty">
+        Enter a source above to generate CDN URLs.
       </div>
 
     </div>
 
   </section>
 
+
   <section class="card">
 
-    <h2>ℹ How it works</h2>
+    <h2>ℹ About Uranium CDN</h2>
 
     <div class="info">
-      Paste a supported repository, package, or CDN URL.
-      Uranium CDN detects what you entered and generates
-      equivalent URLs for available CDN providers.
+
+      Uranium CDN converts supported GitHub repositories,
+      GitHub files, npm packages, and CDN URLs into
+      convenient URLs for multiple CDN providers.
+
       <br><br>
-      This tool does not upload or copy your files.
-      The generated URLs point to the respective CDN services.
+
+      Uranium does not upload or copy your files.
+      The generated URLs point directly to the selected
+      CDN provider.
+
     </div>
 
   </section>
 
 </main>
 
+
 <footer>
-  ☢ Uranium CDN • Universal CDN Generator
+  ☢ Uranium CDN • Powered by the web
 </footer>
+
 
 <script>
 
@@ -302,44 +322,219 @@ const source = document.getElementById("source");
 const providers = document.getElementById("providers");
 const detected = document.getElementById("detected");
 const warning = document.getElementById("warning");
+const generateBtn = document.getElementById("generateBtn");
 
-source.addEventListener("keydown", e => {
-  if(e.key === "Enter") generate();
+
+/* --------------------------------
+   ENTER KEY
+-------------------------------- */
+
+source.addEventListener("keydown", function(event){
+
+  if(event.key === "Enter"){
+    generate();
+  }
+
 });
 
-function escapeHTML(str){
-  return str.replace(/[&<>"']/g, c => ({
-    "&":"&amp;",
-    "<":"&lt;",
-    ">":"&gt;",
-    '"':"&quot;",
-    "'":"&#039;"
-  }[c]));
+
+generateBtn.addEventListener("click", generate);
+
+
+/* --------------------------------
+   ESCAPE HTML
+-------------------------------- */
+
+function escapeHTML(text){
+
+  return String(text).replace(/[&<>"']/g,function(char){
+
+    const map = {
+      "&":"&amp;",
+      "<":"&lt;",
+      ">":"&gt;",
+      '"':"&quot;",
+      "'":"&#039;"
+    };
+
+    return map[char];
+
+  });
+
 }
 
-function encodePath(path){
-  return path
-    .split("/")
-    .map(x => encodeURIComponent(x))
-    .join("/");
-}
 
-function parseGitHub(url){
+/* --------------------------------
+   COPY
+-------------------------------- */
+
+async function copyURL(button,url){
 
   try{
 
-    const u = new URL(url);
+    await navigator.clipboard.writeText(url);
 
-    if(u.hostname !== "github.com" &&
-       u.hostname !== "www.github.com"){
+    const oldText = button.textContent;
+
+    button.textContent = "Copied!";
+
+    setTimeout(function(){
+
+      button.textContent = oldText;
+
+    },1200);
+
+  }catch(error){
+
+    const textarea = document.createElement("textarea");
+
+    textarea.value = url;
+
+    document.body.appendChild(textarea);
+
+    textarea.select();
+
+    document.execCommand("copy");
+
+    textarea.remove();
+
+    button.textContent = "Copied!";
+
+    setTimeout(function(){
+
+      button.textContent = "Copy";
+
+    },1200);
+
+  }
+
+}
+
+
+/* --------------------------------
+   DETECT FILE TYPE
+-------------------------------- */
+
+function getFileType(file){
+
+  if(!file){
+    return "file";
+  }
+
+  const lower = file.toLowerCase();
+
+  if(
+    lower.endsWith(".js") ||
+    lower.endsWith(".mjs") ||
+    lower.endsWith(".cjs")
+  ){
+
+    return "js";
+
+  }
+
+  if(lower.endsWith(".css")){
+
+    return "css";
+
+  }
+
+  if(lower.endsWith(".json")){
+
+    return "json";
+
+  }
+
+  if(
+    lower.endsWith(".png") ||
+    lower.endsWith(".jpg") ||
+    lower.endsWith(".jpeg") ||
+    lower.endsWith(".gif") ||
+    lower.endsWith(".webp") ||
+    lower.endsWith(".svg")
+  ){
+
+    return "image";
+
+  }
+
+  return "file";
+
+}
+
+
+/* --------------------------------
+   CREATE PROVIDER CARD
+-------------------------------- */
+
+function makeCard(name,url,type){
+
+  if(!url){
+    return "";
+  }
+
+  const safeURL = escapeHTML(url);
+
+  return `
+
+    <div class="provider">
+
+      <h3>${escapeHTML(name)}</h3>
+
+      <div class="status">
+        CDN URL
+      </div>
+
+      <div class="urlbox">
+
+        <div
+          class="url"
+          title="${safeURL}">
+          ${safeURL}
+        </div>
+
+        <button
+          class="copy"
+          onclick="copyURL(this, ${JSON.stringify(url)})">
+          Copy
+        </button>
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+/* --------------------------------
+   PARSE GITHUB URL
+-------------------------------- */
+
+function parseGitHub(value){
+
+  try{
+
+    const url = new URL(value);
+
+    if(
+      url.hostname !== "github.com" &&
+      url.hostname !== "www.github.com"
+    ){
+
       return null;
+
     }
 
-    const parts = u.pathname
+    const parts =
+      url.pathname
       .split("/")
       .filter(Boolean);
 
-    if(parts.length < 2) return null;
+    if(parts.length < 2){
+      return null;
+    }
 
     const owner = parts[0];
     const repo = parts[1];
@@ -347,12 +542,14 @@ function parseGitHub(url){
     let branch = "main";
     let file = "";
 
-    if(parts[2] === "blob" || parts[2] === "raw"){
+    if(parts[2] === "blob"){
 
       branch = parts[3] || "main";
       file = parts.slice(4).join("/");
 
-    }else if(parts[2] === "tree"){
+    }
+
+    else if(parts[2] === "tree"){
 
       branch = parts[3] || "main";
       file = parts.slice(4).join("/");
@@ -366,326 +563,454 @@ function parseGitHub(url){
       file
     };
 
-  }catch{
+  }catch(error){
+
     return null;
+
   }
+
 }
 
-function parseGitHubRaw(url){
+
+/* --------------------------------
+   PARSE RAW GITHUB
+-------------------------------- */
+
+function parseRawGitHub(value){
 
   try{
 
-    const u = new URL(url);
+    const url = new URL(value);
 
-    if(u.hostname !== "raw.githubusercontent.com"){
+    if(
+      url.hostname !== "raw.githubusercontent.com"
+    ){
+
       return null;
+
     }
 
-    const parts = u.pathname
+    const parts =
+      url.pathname
       .split("/")
       .filter(Boolean);
 
-    if(parts.length < 4) return null;
+    if(parts.length < 4){
+      return null;
+    }
 
     return {
+
       owner:parts[0],
+
       repo:parts[1],
+
       branch:parts[2],
+
       file:parts.slice(3).join("/")
+
     };
 
-  }catch{
+  }catch(error){
+
     return null;
+
   }
+
 }
 
-function npmPackage(value){
 
-  let v = value.trim();
+/* --------------------------------
+   GITHUB GENERATOR
+-------------------------------- */
 
-  v = v.replace(/^https?:\/\/(www\.)?npmjs\.com\/package\//,"");
+function generateGitHub(gh){
+
+  const owner = gh.owner;
+  const repo = gh.repo;
+  const branch = gh.branch || "main";
+  const file = gh.file;
+
+  if(!file){
+
+    detected.innerHTML =
+      "<strong>GitHub repository detected.</strong> Add a file path to generate a direct CDN URL.";
+
+    detected.style.display = "block";
+
+    warning.textContent =
+      "Example: https://github.com/user/repo/blob/main/file.js";
+
+    warning.style.display = "block";
+
+    return;
+
+  }
+
+  const encodedFile =
+    file
+    .split("/")
+    .map(encodeURIComponent)
+    .join("/");
+
+  const encodedBranch =
+    encodeURIComponent(branch);
+
+
+  /* jsDelivr */
+
+  const jsdelivr =
+    "https://cdn.jsdelivr.net/gh/" +
+    owner + "/" +
+    repo + "@" +
+    encodedBranch + "/" +
+    encodedFile;
+
+
+  /* Fastly jsDelivr */
+
+  const fastly =
+    "https://fastly.jsdelivr.net/gh/" +
+    owner + "/" +
+    repo + "@" +
+    encodedBranch + "/" +
+    encodedFile;
+
+
+  /* GitHub Raw */
+
+  const githubRaw =
+    "https://raw.githubusercontent.com/" +
+    owner + "/" +
+    repo + "/" +
+    encodedBranch + "/" +
+    encodedFile;
+
+
+  /* esm.sh */
+
+  const esm =
+    "https://esm.sh/gh/" +
+    owner + "/" +
+    repo + "@" +
+    encodedBranch + "/" +
+    encodedFile;
+
+
+  const type = getFileType(file);
+
+
+  detected.innerHTML =
+    "<strong>Detected:</strong> GitHub file — " +
+    escapeHTML(owner + "/" + repo + "/" + file);
+
+  detected.style.display = "block";
+
+
+  providers.innerHTML =
+
+    makeCard(
+      "jsDelivr",
+      jsdelivr,
+      type
+    )
+
+    +
+
+    makeCard(
+      "Fastly jsDelivr",
+      fastly,
+      type
+    )
+
+    +
+
+    makeCard(
+      "GitHub Raw",
+      githubRaw,
+      type
+    )
+
+    +
+
+    makeCard(
+      "esm.sh",
+      esm,
+      type
+    );
+
+}
+
+
+/* --------------------------------
+   NPM DETECTION
+-------------------------------- */
+
+function getNpmPackage(value){
+
+  let packageName =
+    value.trim();
+
+  packageName =
+    packageName.replace(
+      /^https?:\/\/(www\.)?npmjs\.com\/package\//,
+      ""
+    );
 
   if(
-    !v.includes("/") ||
-    v.startsWith("https://") ||
-    v.startsWith("http://")
+    packageName.startsWith("http://") ||
+    packageName.startsWith("https://")
   ){
+
     return null;
+
   }
 
-  // scoped packages
-  if(v.startsWith("@")){
-    const p = v.split("/");
-    if(p.length >= 2){
-      return p.slice(0,2).join("/");
+
+  if(packageName.startsWith("@")){
+
+    const parts =
+      packageName.split("/");
+
+    if(parts.length >= 2){
+
+      return parts[0] + "/" + parts[1];
+
     }
+
   }
 
-  return v.split("/")[0];
+
+  return packageName.split("/")[0];
+
 }
 
-function makeCard(name,url,type){
 
-  if(!url) return "";
+/* --------------------------------
+   NPM GENERATOR
+-------------------------------- */
 
-  const safe = escapeHTML(url);
+function generateNpm(packageName){
 
-  let embed = "";
+  const jsdelivr =
+    "https://cdn.jsdelivr.net/npm/" +
+    packageName;
 
-  if(type === "js"){
-    embed =
-      `<script src="${safe}"></script>`;
-  }
 
-  if(type === "css"){
-    embed =
-      `<link rel="stylesheet" href="${safe}">`;
-  }
+  const fastly =
+    "https://fastly.jsdelivr.net/npm/" +
+    packageName;
 
-  return `
-    <div class="provider">
 
-      <h3>${escapeHTML(name)}</h3>
+  const unpkg =
+    "https://unpkg.com/" +
+    packageName;
 
-      <div class="status">Available CDN URL</div>
 
-      <div class="urlbox">
+  const esm =
+    "https://esm.sh/" +
+    packageName;
 
-        <div class="url" title="${safe}">
-          ${safe}
-        </div>
 
-        <button
-          class="copy"
-          onclick="copyURL(this, ${JSON.stringify(url)})">
-          Copy
-        </button>
+  detected.innerHTML =
+    "<strong>Detected:</strong> npm package — " +
+    escapeHTML(packageName);
 
-      </div>
+  detected.style.display = "block";
 
-      ${
-        embed
-        ? `<div class="embed">${escapeHTML(embed)}</div>`
-        : ""
-      }
 
-    </div>
-  `;
+  providers.innerHTML =
+
+    makeCard(
+      "jsDelivr",
+      jsdelivr,
+      "js"
+    )
+
+    +
+
+    makeCard(
+      "Fastly jsDelivr",
+      fastly,
+      "js"
+    )
+
+    +
+
+    makeCard(
+      "UNPKG",
+      unpkg,
+      "js"
+    )
+
+    +
+
+    makeCard(
+      "esm.sh",
+      esm,
+      "js"
+    );
+
 }
 
-function guessType(file){
 
-  if(!file) return "unknown";
+/* --------------------------------
+   EXISTING CDN
+-------------------------------- */
 
-  const f = file.toLowerCase();
+function detectExistingCDN(value){
 
-  if(f.endsWith(".js") ||
-     f.endsWith(".mjs") ||
-     f.endsWith(".cjs")){
-    return "js";
+  const providersList = [
+
+    {
+      name:"jsDelivr",
+      test:"https://cdn.jsdelivr.net/"
+    },
+
+    {
+      name:"Fastly jsDelivr",
+      test:"https://fastly.jsdelivr.net/"
+    },
+
+    {
+      name:"GitHub Raw",
+      test:"https://raw.githubusercontent.com/"
+    },
+
+    {
+      name:"UNPKG",
+      test:"https://unpkg.com/"
+    },
+
+    {
+      name:"esm.sh",
+      test:"https://esm.sh/"
+    }
+
+  ];
+
+
+  for(const provider of providersList){
+
+    if(value.startsWith(provider.test)){
+
+      detected.innerHTML =
+        "<strong>Detected:</strong> " +
+        escapeHTML(provider.name) +
+        " URL";
+
+      detected.style.display = "block";
+
+
+      providers.innerHTML =
+        makeCard(
+          provider.name,
+          value,
+          getFileType(value)
+        );
+
+
+      return true;
+
+    }
+
   }
 
-  if(f.endsWith(".css")){
-    return "css";
-  }
+  return false;
 
-  return "file";
 }
+
+
+/* --------------------------------
+   MAIN GENERATOR
+-------------------------------- */
 
 function generate(){
 
-  const value = source.value.trim();
+  const value =
+    source.value.trim();
 
-  providers.innerHTML = "";
-  warning.style.display = "none";
+
+  providers.innerHTML =
+    `<div class="empty">
+      Enter a source above to generate CDN URLs.
+    </div>`;
+
+
   detected.style.display = "none";
+  warning.style.display = "none";
+
 
   if(!value){
 
     warning.textContent =
-      "Enter a GitHub URL, npm package, or CDN URL.";
+      "Please enter a GitHub URL or npm package.";
 
     warning.style.display = "block";
+
+    return;
+
+  }
+
+
+  /* Existing CDN */
+
+  if(detectExistingCDN(value)){
     return;
   }
 
-  /*
-   * EXISTING CDN URL
-   */
 
-  if(
-    value.startsWith("https://cdn.jsdelivr.net/") ||
-    value.startsWith("https://fastly.jsdelivr.net/") ||
-    value.startsWith("https://raw.githubusercontent.com/") ||
-    value.startsWith("https://unpkg.com/") ||
-    value.startsWith("https://esm.sh/")
-  ){
+  /* GitHub */
 
-    detected.innerHTML =
-      "<strong>Detected:</strong> Existing CDN URL";
+  let github =
+    parseGitHub(value);
 
-    detected.style.display = "block";
 
-    providers.innerHTML =
-      makeCard("Original URL",value,guessType(value));
+  if(!github){
+
+    github =
+      parseRawGitHub(value);
+
+  }
+
+
+  if(github){
+
+    generateGitHub(github);
 
     return;
+
   }
 
-  /*
-   * GITHUB
-   */
 
-  let gh = parseGitHub(value);
-
-  if(!gh){
-    gh = parseGitHubRaw(value);
-  }
-
-  if(gh){
-
-    if(!gh.file){
-
-      warning.textContent =
-        "This is a GitHub repository URL. Add a file path to generate a direct CDN URL, for example /blob/main/index.js.";
-
-      warning.style.display = "block";
-
-      detected.innerHTML =
-        `<strong>Detected:</strong> GitHub repository — ${escapeHTML(gh.owner)}/${escapeHTML(gh.repo)}`;
-
-      detected.style.display = "block";
-
-      return;
-    }
-
-    const owner = gh.owner;
-    const repo = gh.repo;
-    const branch = gh.branch || "main";
-    const file = encodePath(gh.file);
-
-    const jsdelivr =
-      `https://cdn.jsdelivr.net/gh/${owner}/${repo}@${encodeURIComponent(branch)}/${file}`;
-
-    const fastly =
-      `https://fastly.jsdelivr.net/gh/${owner}/${repo}@${encodeURIComponent(branch)}/${file}`;
-
-    const raw =
-      `https://raw.githubusercontent.com/${owner}/${repo}/${encodeURIComponent(branch)}/${file}`;
-
-    const esm =
-      `https://esm.sh/gh/${owner}/${repo}@${encodeURIComponent(branch)}/${file}`;
-
-    const type = guessType(gh.file);
-
-    detected.innerHTML =
-      `<strong>Detected:</strong> GitHub — ${escapeHTML(owner)}/${escapeHTML(repo)} @ ${escapeHTML(branch)}`;
-
-    detected.style.display = "block";
-
-    providers.innerHTML =
-
-      makeCard("jsDelivr",jsdelivr,type) +
-
-      makeCard("Fastly jsDelivr",fastly,type) +
-
-      makeCard("GitHub Raw",raw,type) +
-
-      makeCard("esm.sh",esm,type);
-
-    return;
-  }
-
-  /*
-   * NPM
-   */
+  /* npm */
 
   if(
     !value.startsWith("http://") &&
     !value.startsWith("https://")
   ){
 
-    const pkg = npmPackage(value);
+    const packageName =
+      getNpmPackage(value);
 
-    if(pkg){
 
-      detected.innerHTML =
-        `<strong>Detected:</strong> npm package — ${escapeHTML(pkg)}`;
+    if(packageName){
 
-      detected.style.display = "block";
-
-      const jsdelivr =
-        `https://cdn.jsdelivr.net/npm/${pkg}`;
-
-      const fastly =
-        `https://fastly.jsdelivr.net/npm/${pkg}`;
-
-      const unpkg =
-        `https://unpkg.com/${pkg}`;
-
-      const esm =
-        `https://esm.sh/${pkg}`;
-
-      providers.innerHTML =
-
-        makeCard("jsDelivr",jsdelivr,"js") +
-
-        makeCard("Fastly jsDelivr",fastly,"js") +
-
-        makeCard("UNPKG",unpkg,"js") +
-
-        makeCard("esm.sh",esm,"js");
+      generateNpm(packageName);
 
       return;
+
     }
+
   }
 
-  /*
-   * UNKNOWN
-   */
+
+  /* Unknown */
 
   warning.textContent =
-    "I couldn't automatically recognize that source. Try a GitHub file URL or an npm package name.";
+    "I couldn't recognize that source. Try a GitHub file URL, GitHub Raw URL, npm package name, or an existing CDN URL.";
 
   warning.style.display = "block";
-
-}
-
-async function copyURL(button,url){
-
-  try{
-
-    await navigator.clipboard.writeText(url);
-
-    const old = button.textContent;
-
-    button.textContent = "Copied!";
-
-    setTimeout(()=>{
-      button.textContent = old;
-    },1200);
-
-  }catch{
-
-    const area = document.createElement("textarea");
-
-    area.value = url;
-
-    document.body.appendChild(area);
-
-    area.select();
-
-    document.execCommand("copy");
-
-    area.remove();
-
-    button.textContent = "Copied!";
-
-    setTimeout(()=>{
-      button.textContent = "Copy";
-    },1200);
-
-  }
 
 }
 
